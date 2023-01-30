@@ -1,40 +1,36 @@
 import React, { useState } from "react";
 import Heading from "./Heading";
+import Input from "./Input";
 import Items from "./Items";
 
 function App() {
-  const [inputText, setInputText] = useState();
+  
   const [listItems, setListItems] = useState([]);
 
-  const updateInput = (event) => {
-    const item = event.target.value;
-    setInputText(item);
-  };
-
-  function updateList(event) {
+  function updateList(inputText) {
     setListItems((previousvals) => {
       return [...previousvals, inputText];
     });
-    setInputText("");
     console.log(listItems);
   }
+
+  const deleteItem = (id) => {
+    setListItems((previousItems)=>{
+      return previousItems.filter((item,index)=>{
+        return index !== id
+      })
+    })
+  };
 
   return (
     <div className="container">
       <Heading />
-      <div className="form">
-        <input type="text" onChange={updateInput} value={inputText} />
-        <button onClick={updateList}>
-          <span>Add</span>
-        </button>
-      </div>
+      <Input 
+      updateList= {updateList} />
       <div>
         <ul>
           {listItems.map((item, i) => {
-            return (<Items 
-              key = {i}
-              item ={item}
-            />);
+            return <Items key={i} id={i} item={item} onChecked={deleteItem} />;
           })}
         </ul>
       </div>

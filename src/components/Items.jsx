@@ -4,10 +4,12 @@ import React from "react";
 function Items (props){
 
  return (
-   <li>
-     {props.item}
-   </li>
- );
+   <div onClick={()=>{
+    props.onChecked(props.id);
+   }}>
+     <li>{props.item}</li>
+   </div>
+ ); 
 }
 
 export default Items
